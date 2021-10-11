@@ -13,7 +13,7 @@ class DataRepository{
 
   String _accessToken = "";
 
-  Future<int>getEndpointData(endpoint) async{
+  Future<EndpointData>getEndpointData(Endpoint endpoint) async{
     try {
       if(_accessToken.isEmpty){
         _accessToken = await apiService.getAccessToken();
@@ -52,13 +52,15 @@ class DataRepository{
         apiService.getEndpointData(accessToken: _accessToken, endpoint: Endpoint.recovered),
       ]
     );
-    return EndpointsData({
-      Endpoint.cases : values[0],
-      Endpoint.casesSuspected : values[1],
-      Endpoint.casesConfirmed : values[2],
-      Endpoint.deaths : values[3],
-      Endpoint.recovered : values[4],
-    });
+    return EndpointsData(
+      values: {
+        Endpoint.cases: values[0],
+        Endpoint.casesSuspected: values[1],
+        Endpoint.casesConfirmed: values[2],
+        Endpoint.deaths: values[3],
+        Endpoint.recovered: values[4],
+      },
+    );
 
   }
 

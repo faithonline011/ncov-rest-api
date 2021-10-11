@@ -32,7 +32,6 @@ class EndpointCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
       child: Card(
-
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
           child: Column(
@@ -45,7 +44,7 @@ class EndpointCard extends StatelessWidget {
                 children: [
                   Image.asset(cardData.assetName, color: cardData.color,),
                   Text(
-                    (value!=null && value!=0)? value.toString():"Unavailable Now",
+                    (value!=null && value!=0)? value.toString(): "Unavailable Now",
                     style: Theme.of(context).textTheme.headline5!.copyWith(color: cardData.color, fontWeight: FontWeight.w500),),
                 ],
               ),

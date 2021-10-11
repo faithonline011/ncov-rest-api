@@ -30,7 +30,7 @@ class APIService {
     throw response;
     }
 
-    Future<int> getEndpointData({
+    Future<EndpointData> getEndpointData({
       required String accessToken,
       required Endpoint endpoint,
     }) async {
@@ -43,10 +43,12 @@ class APIService {
         List <dynamic> data = jsonDecode(response.body);
         if(data.isNotEmpty){
           final Map <String, dynamic> endpointData = data[0];
-          final String? jsonResponseKey = _responseJsonKeys[endpoint];
-          int result = endpointData[jsonResponseKey];
-          if(result!=null){
-            return result;
+          final String jsonResponseKey = _responseJsonKeys[endpoint]!;
+          final int value = endpointData[jsonResponseKey];
+          final String dateString = endpointData['date'];
+          final date = DateTime.tryParse(dateString);
+          if(value!=null){
+            return EndpointData(value: value, date: date);
           }
         }
       }

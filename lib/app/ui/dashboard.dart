@@ -14,8 +14,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  EndpointsData _endpointsData = EndpointsData({});
-
+  EndpointsData? _endpointsData;
   @override
   void initState(){
     super.initState();
@@ -29,22 +28,21 @@ class _DashboardState extends State<Dashboard> {
       _endpointsData = endpointsData;
     });
   }
-
   @override
   Widget build(BuildContext context) {
-    print(_endpointsData);
-    print(_endpointsData.values);
-    print(_endpointsData.values[Endpoint.cases]);
     return Scaffold(
       appBar: AppBar(title: const Text("Coronavirus Tracker"),),
       body: RefreshIndicator(
         onRefresh: updateData,
         child: ListView(
           children: [
+            LastUpdatedStatusText(text: (_endpointsData!=null)? _endpointsData!.values[Endpoint.cases]!.date?.toString() ?? "" : ""),
             for (var endpoint in Endpoint.values)
               EndpointCard(
                 endpoint,
-                _endpointsData.values[endpoint],
+                (_endpointsData != null)?
+                    _endpointsData!.values[endpoint]!.value
+                    :null
               ),
           ],
         ),
